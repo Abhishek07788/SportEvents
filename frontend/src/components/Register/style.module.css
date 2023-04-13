@@ -1,0 +1,29 @@
+.register {
+  width: 400px;
+  margin: auto;
+  background-color: #28292cde;
+  padding: 20px;
+  margin-top: 10%;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.register > h1 {
+  font-size: 25px;
+  font-weight: bold;
+  color: #ffff;
+}
+.form > input {
+  background-color: #ffff;
+  border: 1px solid;
+  margin-top: 10px;
+  font-weight: 400;
+  color: black;
+}
+
+.form > button {
+  width: 100%;
+  background: teal;
+  margin-top: 15px;
+  border: 1px solid;
+}

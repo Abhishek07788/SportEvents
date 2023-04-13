@@ -1,9 +1,12 @@
 import "./App.css";
+import Navbar from "./Navbar/Navbar";
+import AllRoutes from "./Routes/AllRoutes";
 
 function App() {
   return (
     <div className="App">
-      <h1>Hii, PLAYO-APP this is the frontend</h1>
+      <Navbar />
+      <AllRoutes />
     </div>
   );
 }
