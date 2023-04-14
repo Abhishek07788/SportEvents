@@ -10,6 +10,11 @@ export const getEventsApi = () => {
   return axios.get(`http://localhost:8080/events`);
 };
 
+//---------- (get by eventId) --------
+export const getByEventIdApi = (id) => {
+  return axios.get(`http://localhost:8080/events/${id}`);
+};
+
 //---------- (filter by sport) --------
 export const filterBySportApi = (sport_name) => {
   return axios.get(`http://localhost:8080/events/filter_sport/${sport_name}`);

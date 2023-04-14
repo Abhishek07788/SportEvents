@@ -2,6 +2,7 @@ import { Box, Button, Heading, Input, Select, Text } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import ModalForAdd from "./Modal";
 import { AppContext } from "../../context/ContextApi";
+import { Link } from "react-router-dom";
 
 const Homepage = () => {
   const {
@@ -161,14 +162,11 @@ const Homepage = () => {
               <Text fontSize={15} textAlign="right" mb="1">
                 Publish on: <u>{el.publish_date.slice(4, 21)}</u>
               </Text>
-              <Button
-                fontSize={13}
-                ml="2"
-                // onClick={() => handleView(el._id)}
-                colorScheme={"teal"}
-              >
-                View Sport
-              </Button>
+              <Link to={`/event_details/${el._id}`}>
+                <Button fontSize={13} ml="2" colorScheme={"teal"}>
+                  View Sport
+                </Button>
+              </Link>
               {el.user_id == userId ? (
                 <Button
                   fontSize={13}
