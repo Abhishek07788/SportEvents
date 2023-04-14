@@ -26,7 +26,7 @@ app.get("/", async (req, res) => {
 app.get("/:event_id", async (req, res) => {
   const { event_id } = req.params;
   try {
-    const event = await Events.find({ _id: event_id }).populate(["user"]);
+    const event = await Events.findOne({ _id: event_id }).populate(['user']);
     res.status(200).send(event);
   } catch (e) {
     res.status(404).send(e.message);
