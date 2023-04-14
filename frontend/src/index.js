@@ -4,16 +4,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
-import AuthContext from "./context/AuthContext";
+import ContextApi from "./context/ContextApi";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ChakraProvider>
       <BrowserRouter>
-        <AuthContext>
+        <ContextApi>
           <App />
-        </AuthContext>
+        </ContextApi>
       </BrowserRouter>
     </ChakraProvider>
   </React.StrictMode>

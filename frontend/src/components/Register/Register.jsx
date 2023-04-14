@@ -2,8 +2,8 @@ import { Button, Input, Text, useToast } from "@chakra-ui/react";
 import style from "./style.module.css";
 import React, { useContext } from "react";
 import { useState } from "react";
-import { registerApiCall } from "../../Api/api";
-import { AppContext } from "../../context/AuthContext";
+import { registerApiCall } from "../../Api/userApis";
+import { AppContext } from "../../context/ContextApi";
 
 const initialState = {
   username: "",
