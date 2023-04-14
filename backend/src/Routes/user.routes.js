@@ -77,7 +77,7 @@ app.post("/register", async (req, res) => {
 //--------- get by user name --------
 // ---------- (Get Users) -------------
 app.get("/:username", async (req, res) => {
-  const { username } = req.body;
+  const { username } = req.params;
   try {
     const user = await User.findOne({ username });
     res.status(200).send(user);

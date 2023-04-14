@@ -2,11 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const dbConnect = require("./config/db");
 const UserRouter = require("./Routes/user.routes");
+const eventRouter = require("./Routes/events.routes");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use("/users", UserRouter);
+app.use("/events", eventRouter);
 
 app.use("/", (req, res) => {
   res.send("Hii, this is the SportEvents backend");
