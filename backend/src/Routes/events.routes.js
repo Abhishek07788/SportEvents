@@ -6,7 +6,7 @@ const app = express.Router();
 app.post("/", async (req, res) => {
   try {
     await Events.create(req.body);
-    res.status(200).send("Event Added");
+    res.status(200).send({ message: "Event Added" });
   } catch (e) {
     res.status(404).send(e.message);
   }
@@ -22,22 +22,11 @@ app.get("/", async (req, res) => {
   }
 });
 
-//--------- get by blog id --------
+//--------- get by event id --------
 app.get("/:event_id", async (req, res) => {
   const { event_id } = req.params;
   try {
-    const event = await Events.findOne({ _id: event_id }).populate(['user']);
-    res.status(200).send(event);
-  } catch (e) {
-    res.status(404).send(e.message);
-  }
-});
-
-//--------- get by user id --------
-app.get("/user/:user_id", async (req, res) => {
-  const { user_id } = req.params;
-  try {
-    const event = await Events.find({ user_id: user_id }).populate(["user"]);
+    const event = await Events.findOne({ _id: event_id }).populate(["user"]);
     res.status(200).send(event);
   } catch (e) {
     res.status(404).send(e.message);
@@ -92,23 +81,9 @@ app.get("/search/:findTitle", async (req, res) => {
     filtered = await Events.find({
       description: { $regex: ".*" + findTitle + ".*" },
     }).sort({ publish_date: -1 });
-    filtered = await Events.find({
-      publish_date: { $regex: ".*" + findTitle + ".*" },
-    }).sort({ publish_date: -1 });
     res.send(filtered);
   } catch (e) {
     res.status(404).send(e);
-  }
-});
-
-//--------- delete event --------
-app.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    await Events.deleteOne({ _id: id });
-    res.status(200).send("Event Deleted");
-  } catch (e) {
-    res.status(404).send(e.message);
   }
 });
 
