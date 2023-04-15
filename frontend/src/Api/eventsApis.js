@@ -30,7 +30,3 @@ export const searchApi = (query) => {
   return axios.get(`http://localhost:8080/events/search/${query}`);
 };
 
-//---------- (delete event) --------
-export const deleteEventsApi = (id) => {
-  return axios.delete(`http://localhost:8080/events/${id}`);
-};

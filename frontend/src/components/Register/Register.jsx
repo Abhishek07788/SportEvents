@@ -26,7 +26,7 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     registerApiCall(form).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data.status) {
         localStorage.setItem("token", res.data.token);
         handleLogin(res.data.token);

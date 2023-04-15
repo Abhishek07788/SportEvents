@@ -1,5 +1,13 @@
-import { Box, Grid, Heading, Image, SimpleGrid, Text } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Grid,
+  Heading,
+  Image,
+  SimpleGrid,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
+import React, { useContext, useEffect, useState } from "react";
 import { FcSportsMode } from "react-icons/fc";
 import { FaCity } from "react-icons/fa";
 import { MdOutlineSportsGymnastics } from "react-icons/md";
@@ -11,10 +19,15 @@ import {
 } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import { getByEventIdApi } from "../../Api/eventsApis";
+import { AppContext } from "../../context/ContextApi";
+import Lists from "./Lists";
 
 const EventDetails = () => {
-  const [eventDetails, setEventDetails] = useState({});
+  const [eventDetails, setEventDetails] = useState([]);
+  const { userId, requestData, sendNewRequests } = useContext(AppContext);
+  const [activeTotal, setActiveTotal] = useState(0);
   const { id } = useParams();
+  const toast = useToast();
 
   useEffect(() => {
     getByEventIdApi(id).then((res) => {
@@ -22,13 +35,52 @@ const EventDetails = () => {
     });
   }, [id]);
 
+  // ---------- Find Total Accept users -------
+  useEffect(() => {
+    const total = requestData.filter(
+      (el) => el.event_id === id && el.status === "Accept"
+    );
+    setActiveTotal(total.length);
+  }, [requestData]);
+
+  // ---------- Sent request -------
+  const handleSendRequest = (event_id, totalLimit) => {
+    if (activeTotal < totalLimit) {
+      sendNewRequests(event_id);
+    } else {
+      // ------------ Alert----------
+      toast({
+        title: "Players Limit full!!",
+        description: "Best of luck for next Event😊",
+        status: "info",
+        duration: 4000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+  };
+
+  //---------- Filter Request =======
+  const myRequest = requestData.filter(
+    (el) => el.user_id === userId && el.event_id === id
+  );
+
   return (
-    <Grid w="100%" bg="#e6defa" color="black" pb="40">
-      <Box w="85%" p="4" m="auto" mt="4rem">
+    <Grid w="100%" color="black" pb="40">
+      <Box
+        w="90%"
+        p="5"
+        pr="10"
+        pl="10"
+        pb="32"
+        m="auto"
+        mt="4rem"
+        bg="#f3f7fd"
+        borderRadius={8}
+      >
         <Heading w="70%" m="auto">
           Sport Name: {eventDetails?.sport_name}
         </Heading>
-
         <Image
           mt="3"
           w="100%"
@@ -38,7 +90,6 @@ const EventDetails = () => {
           src={eventDetails?.sport_img}
           alt="banner"
         />
-
         {/*-------- (Overview)----- */}
         <Box
           textAlign="left"
@@ -66,9 +117,8 @@ const EventDetails = () => {
             {eventDetails?.publish_date?.slice(4, 15)}
           </Heading>
         </Box>
-
-        {/*--------- All Info----*/}
-        <SimpleGrid columns={[4, 4, 4, 4]}>
+        {/*--------- All Info--------*/}
+        <SimpleGrid columns={[1, 2, 3, 4]}>
           <Text
             fontWeight={"bold"}
             display="flex"
@@ -83,6 +133,22 @@ const EventDetails = () => {
             Game Start on:
             <span style={{ color: "#2377fd", marginLeft: "2px" }}>
               {eventDetails?.date}
+            </span>
+          </Text>
+          <Text
+            fontWeight={"bold"}
+            justifyContent="left"
+            display="flex"
+            alignItems="center"
+            fontSize={[15, 16, 17, 20]}
+            mt="7"
+            ml="5"
+            gap="1"
+          >
+            <AiOutlineFieldTime />
+            At:
+            <span style={{ color: "#2377fd", marginLeft: "2px" }}>
+              {eventDetails?.time}
             </span>
           </Text>
           <Text
@@ -133,22 +199,6 @@ const EventDetails = () => {
             ml="5"
             gap="1"
           >
-            <AiOutlineFieldTime />
-            At:
-            <span style={{ color: "#2377fd", marginLeft: "2px" }}>
-              {eventDetails?.time}
-            </span>
-          </Text>
-          <Text
-            fontWeight={"bold"}
-            justifyContent="left"
-            display="flex"
-            alignItems="center"
-            fontSize={[15, 16, 17, 20]}
-            mt="7"
-            ml="5"
-            gap="1"
-          >
             <MdOutlineSportsGymnastics style={{ fontSize: "30px" }} />
             Sport:
             <span style={{ color: "#2377fd", marginLeft: "2px" }}>
@@ -182,12 +232,22 @@ const EventDetails = () => {
             gap="1"
           >
             <BsPeopleFill style={{ fontSize: "30px" }} />
-            Active Players:
+            Players Joined:
             <span style={{ color: "#2377fd", marginLeft: "2px" }}>
-              {eventDetails?.number_of_player}
+              {activeTotal}
             </span>
           </Text>
         </SimpleGrid>
+
+        {/* ----------(LIST Component) -------- */}
+        <Lists
+          myRequest={myRequest}
+          eventDetails={eventDetails}
+          handleSendRequest={handleSendRequest}
+        />
+
+        <br />
+        {/* ---------- Description -------- */}
         <Box w="96%" m="auto" mt="10" textAlign="left">
           <Heading fontSize={24}>
             <u>Description:</u>

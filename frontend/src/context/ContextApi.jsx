@@ -14,6 +14,12 @@ import {
 } from "../Api/eventsApis";
 import { getUserApi } from "../Api/userApis";
 import { useToast } from "@chakra-ui/react";
+import {
+  deleteRequestsApi,
+  getAllRequestsApi,
+  postRequestsApi,
+  updateRequestsApi,
+} from "../Api/requestApis";
 
 function Token() {
   let ApiToken = localStorage.getItem("token") || "";
@@ -27,6 +33,7 @@ const ContextApi = ({ children }) => {
   const [username, setUsername] = useState();
   const [userId, setUserID] = useState("");
   const [eventData, setEventData] = useState([]);
+  const [requestData, setRequestData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -36,8 +43,10 @@ const ContextApi = ({ children }) => {
     let token = Token();
     if (token) {
       setUsername(token.username);
+      setUserID(token?.id);
     }
     getEvents();
+    getAllRequests();
   }, []);
 
   useEffect(() => {
@@ -48,6 +57,8 @@ const ContextApi = ({ children }) => {
   const handleLogin = (token) => {
     navigate("/");
     setUsername(jwt_decode(token).username);
+    setUserID(jwt_decode(token)?.id);
+    getOneUser();
   };
 
   //--------- (log out) ----------
@@ -157,19 +168,82 @@ const ContextApi = ({ children }) => {
     }
   };
 
-  //--------- (delete events) ----------
-  const deleteEvents = (id) => {
+  //-------------- (Invite and requests)-----------
+  const sendNewRequests = (eventId) => {
     setError(false);
     setLoading(true);
-    deleteEventsApi(id)
+    postRequestsApi({
+      user_id: userId,
+      event_id: eventId,
+      event: eventId,
+      username: username,
+      status: "Pending",
+    })
       .then((res) => {
-        getEvents();
         setError(false);
         setLoading(false);
+        getAllRequests();
         // ------------ Alert----------
         toast({
-          title: "Event Deleted",
+          title: res.data.message,
           status: "success",
+          duration: 2000,
+          isClosable: true,
+          position: "top",
+        });
+      })
+      .catch((e) => {
+        setError(true);
+        setLoading(false);
+      });
+  };
+
+  //-------------- (get all requests)-----------
+  const getAllRequests = () => {
+    setError(false);
+    setLoading(true);
+    getAllRequestsApi()
+      .then((res) => {
+        setError(false);
+        setLoading(false);
+        setRequestData(res.data);
+      })
+      .catch((e) => {
+        setError(true);
+        setLoading(false);
+      });
+  };
+
+  //-------------- (Accept or Reject requests)-----------
+  const updateRequests = (id, status) => {
+    setError(false);
+    setLoading(true);
+    updateRequestsApi(id, status)
+      .then((res) => {
+        setError(false);
+        setLoading(false);
+        getAllRequests();
+        getOneUser();
+      })
+      .catch((e) => {
+        setError(true);
+        setLoading(false);
+      });
+  };
+
+  //-------------- (Accept or Reject requests)-----------
+  const deleteRequests = (id) => {
+    setError(false);
+    setLoading(true);
+    deleteRequestsApi(id)
+      .then((res) => {
+        setError(false);
+        setLoading(false);
+        getAllRequests();
+        // ------------ Alert----------
+        toast({
+          title: res.data.message,
+          status: "error",
           duration: 2000,
           isClosable: true,
           position: "top",
@@ -191,12 +265,17 @@ const ContextApi = ({ children }) => {
         eventData,
         handleLogin,
         handleLogOut,
+        //----- Event ------
         getEvents,
         addNewEvent,
-        deleteEvents,
         filterBySport,
         filterByCity,
         getSearchedEvents,
+        //---- Invites -----
+        requestData,
+        sendNewRequests,
+        updateRequests,
+        deleteRequests,
       }}
     >
       {children}

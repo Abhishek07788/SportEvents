@@ -51,7 +51,7 @@ const Navbar = () => {
           display={["none", "none", "flex", "flex"]}
         >
           <Link to="/">
-            <Button>Sprint</Button>
+            <Button>Events</Button>
           </Link>
 
           {/* ---------- (Conditional rendering) ------------*/}
@@ -75,7 +75,7 @@ const Navbar = () => {
             <>
               <Link to="/">
                 <Text color="blue" fontWeight={700}>
-                  <u>Sprint</u>
+                  <u>Events</u>
                 </Text>
               </Link>
               <Text fontWeight={700}>

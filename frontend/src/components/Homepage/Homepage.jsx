@@ -8,7 +8,6 @@ const Homepage = () => {
   const {
     userId,
     eventData,
-    deleteEvents,
     filterBySport,
     filterByCity,
     getSearchedEvents,
@@ -155,7 +154,7 @@ const Homepage = () => {
               </Heading>
 
               <Text color="#ffffff" fontSize={14} mt="2">
-                {el.description}
+                {el.description.slice(0, 70)}..
               </Text>
             </Box>
             <Box textAlign="right">
@@ -163,19 +162,13 @@ const Homepage = () => {
                 Publish on: <u>{el.publish_date.slice(4, 21)}</u>
               </Text>
               <Link to={`/event_details/${el._id}`}>
-                <Button fontSize={13} ml="2" colorScheme={"teal"}>
+                <Button fontSize={14} ml="2" colorScheme={"teal"}>
                   View Sport
                 </Button>
               </Link>
               {el.user_id == userId ? (
-                <Button
-                  fontSize={13}
-                  ml="2"
-                  onClick={() => deleteEvents(el._id)}
-                  colorScheme={"#dc143c"}
-                  bg={"#dc143c"}
-                >
-                  Delete Sport
+                <Button fontSize={14} ml="2" bg={"#fe9119"}>
+                  My Events
                 </Button>
               ) : (
                 ""
