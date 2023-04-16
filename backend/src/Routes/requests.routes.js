@@ -33,7 +33,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-//--------- get requests --------
+//--------- update requests --------
 app.patch("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -42,6 +42,20 @@ app.patch("/:id", async (req, res) => {
       { $set: { status: req.body.status } }
     );
     res.status(200).send({ message: "request updated" });
+  } catch (e) {
+    res.status(404).send(e.message);
+  }
+});
+
+//--------- reject all requests --------
+app.patch("/event_id/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Requests.updateMany(
+      { event_id: id, status: "Pending" },
+      { $set: { status: "Reject" } }
+    );
+    res.status(200).send({ message: "Event Ended All Requests rejected!!" });
   } catch (e) {
     res.status(404).send(e.message);
   }
