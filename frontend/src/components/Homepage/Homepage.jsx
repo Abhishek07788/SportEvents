@@ -172,8 +172,9 @@ const Homepage = () => {
             p="5"
           >
             <Box textAlign="left">
-              <Heading fontSize={18} color="#ffffff">
-                {el.sport_name} | {el.city}.
+              <Heading fontSize={17} color="#ffffff">
+                {el.sport_name} <span style={{ color: "#444654" }}>|</span>{" "}
+                {el.city} <span style={{ color: "#444654" }}>|</span> {el.date}
               </Heading>
 
               <Text color="#ffffff" fontSize={14} mt="2">
