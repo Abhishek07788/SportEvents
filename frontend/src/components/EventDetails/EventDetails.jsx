@@ -8,7 +8,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
-import { FcSportsMode } from "react-icons/fc";
+import { FcExpired, FcSportsMode } from "react-icons/fc";
 import { FaCity } from "react-icons/fa";
 import { MdOutlineSportsGymnastics } from "react-icons/md";
 import { AiTwotoneCalendar, AiOutlineFieldTime } from "react-icons/ai";
@@ -21,10 +21,14 @@ import { useParams } from "react-router-dom";
 import { getByEventIdApi } from "../../Api/eventsApis";
 import { AppContext } from "../../context/ContextApi";
 import Lists from "./Lists";
+import { useDateTime } from "../customHook/useDateTime";
+import { updateAllRequestsApi } from "../../Api/requestApis";
 
 const EventDetails = () => {
   const [eventDetails, setEventDetails] = useState([]);
-  const { userId, requestData, sendNewRequests } = useContext(AppContext);
+  const { username, userId, requestData, sendNewRequests } =
+    useContext(AppContext);
+  const [isEventExpired, setEventDetail] = useDateTime();
   const [activeTotal, setActiveTotal] = useState(0);
   const { id } = useParams();
   const toast = useToast();
@@ -32,6 +36,7 @@ const EventDetails = () => {
   useEffect(() => {
     getByEventIdApi(id).then((res) => {
       setEventDetails(res.data);
+      setEventDetail(res.data);
     });
   }, [id]);
 
@@ -45,20 +50,37 @@ const EventDetails = () => {
 
   // ---------- Sent request -------
   const handleSendRequest = (event_id, totalLimit) => {
-    if (activeTotal < totalLimit) {
-      sendNewRequests(event_id);
+    if (username) {
+      if (activeTotal < totalLimit && !isEventExpired) {
+        sendNewRequests(event_id);
+      } else {
+        // ------------ Alert----------
+        toast({
+          title: "Players Limit full or Event Expired!!",
+          description: "Best of luck for next Event😊",
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+          position: "top",
+        });
+      }
     } else {
       // ------------ Alert----------
       toast({
-        title: "Players Limit full!!",
-        description: "Best of luck for next Event😊",
-        status: "info",
+        title: "Please Register☹️!!",
+        description: "Login first to send the invite!!",
+        status: "error",
         duration: 4000,
         isClosable: true,
         position: "top",
       });
     }
   };
+
+  //---------- reject all requests ------
+  if (isEventExpired) {
+    updateAllRequestsApi(eventDetails?._id).then((res) => {});
+  }
 
   //---------- Filter Request =======
   const myRequest = requestData.filter(
@@ -237,6 +259,24 @@ const EventDetails = () => {
               {activeTotal}
             </span>
           </Text>
+          {isEventExpired ? (
+            <Text
+              fontWeight={"bold"}
+              justifyContent="left"
+              display="flex"
+              alignItems="center"
+              fontSize={[15, 16, 17, 20]}
+              mt="7"
+              ml="5"
+              gap="1"
+              color="red"
+            >
+              <FcExpired style={{ fontSize: "30px" }} />
+              Event Expired!!
+            </Text>
+          ) : (
+            ""
+          )}
         </SimpleGrid>
 
         {/* ----------(LIST Component) -------- */}

@@ -1,11 +1,46 @@
-import { Box, Button, Heading, Input, Select, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Heading,
+  Input,
+  Select,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import ModalForAdd from "./Modal";
 import { AppContext } from "../../context/ContextApi";
 import { Link } from "react-router-dom";
 
+const list = {
+  city: [
+    "Agra",
+    "Ahmadabad",
+    "Bangalore",
+    "Chennai",
+    "Delhi",
+    "Hyderabad",
+    "Mumbai",
+    "Noida",
+    "Pune",
+  ],
+  sport: [
+    "Cricket",
+    "Kabaddi",
+    "Hockey",
+    "Badminton",
+    "Football",
+    "Wrestling",
+    "Tennis",
+    "Basketball",
+    "Boxing",
+    "Motorsports",
+  ],
+};
+
 const Homepage = () => {
   const {
+    username,
     userId,
     eventData,
     filterBySport,
@@ -14,31 +49,22 @@ const Homepage = () => {
     error,
   } = useContext(AppContext);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const toast = useToast();
 
-  let list = {
-    city: [
-      "Agra",
-      "Ahmadabad",
-      "Bangalore",
-      "Chennai",
-      "Delhi",
-      "Hyderabad",
-      "Mumbai",
-      "Noida",
-      "Pune",
-    ],
-    sport: [
-      "Cricket",
-      "Kabaddi",
-      "Hockey",
-      "Badminton",
-      "Football",
-      "Wrestling",
-      "Tennis",
-      "Basketball",
-      "Boxing",
-      "Motorsports",
-    ],
+  const handleCreateNewEvent = () => {
+    if (username) {
+      setIsModalVisible(!isModalVisible);
+    } else {
+      // ------------ Alert----------
+      toast({
+        title: "Please Register☹️!!",
+        description: "Login first to create an event!!",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+        position: "top",
+      });
+    }
   };
 
   return (
@@ -58,10 +84,7 @@ const Homepage = () => {
         <Heading fontSize={32} color="#ffffff">
           Create a Sport Event
         </Heading>
-        <Button
-          onClick={() => setIsModalVisible(!isModalVisible)}
-          colorScheme={"teal"}
-        >
+        <Button onClick={handleCreateNewEvent} colorScheme={"green"}>
           Create
         </Button>
       </Box>

@@ -64,6 +64,7 @@ const Lists = ({ myRequest, eventDetails, handleSendRequest }) => {
               <Heading fontSize={20} p="2" bg="teal" color="#ffff">
                 Invites and Requests
               </Heading>
+
               <Table border="1px" borderRadius={8}>
                 <thead>
                   <Tr bg="#4587d0">
@@ -140,7 +141,7 @@ const Lists = ({ myRequest, eventDetails, handleSendRequest }) => {
                           </td>
                         </Tr>
                       ) : (
-                        ""
+                        <tr></tr>
                       )}
                     </tbody>
                   ))}
@@ -166,6 +167,7 @@ const Lists = ({ myRequest, eventDetails, handleSendRequest }) => {
           ) : (
             ""
           )}
+
           <Button
             float="right"
             mt="10"
