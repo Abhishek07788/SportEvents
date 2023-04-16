@@ -93,7 +93,7 @@ const Register = () => {
           <u>{hide ? "Hide" : "Show"}</u>
         </Text>
         <Button
-          color="#ffffff"
+          colorScheme="teal"
           type="submit"
           isLoading={loading ? true : false}
         >

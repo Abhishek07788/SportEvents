@@ -145,7 +145,7 @@ const Homepage = () => {
       )}
 
       {/* ---------- Events -------- */}
-      {eventData.length == 0 ? (
+      {eventData.length === 0 ? (
         <Heading
           fontSize={[20, 20, 40, 40]}
           textAlign="center"
@@ -173,7 +173,7 @@ const Homepage = () => {
           >
             <Box textAlign="left">
               <Heading fontSize={18} color="#ffffff">
-                {el.sport_name}
+                {el.sport_name} | {el.city}.
               </Heading>
 
               <Text color="#ffffff" fontSize={14} mt="2">
@@ -189,7 +189,7 @@ const Homepage = () => {
                   View Sport
                 </Button>
               </Link>
-              {el.user_id == userId ? (
+              {el.user_id === userId ? (
                 <Button fontSize={14} ml="2" bg={"#fe9119"}>
                   My Events
                 </Button>

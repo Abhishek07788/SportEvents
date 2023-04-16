@@ -12,6 +12,7 @@ import { FcExpired, FcSportsMode } from "react-icons/fc";
 import { FaCity } from "react-icons/fa";
 import { MdOutlineSportsGymnastics } from "react-icons/md";
 import { AiTwotoneCalendar, AiOutlineFieldTime } from "react-icons/ai";
+import loadingImg from "../../Images/loadingimg.gif";
 import {
   BsPersonCircle,
   BsFillCalendar2DateFill,
@@ -109,7 +110,7 @@ const EventDetails = () => {
           borderRadius={16}
           h={["280px", "280px", "280px", "290px"]}
           boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"
-          src={eventDetails?.sport_img}
+          src={eventDetails?.sport_img || loadingImg}
           alt="banner"
         />
         {/*-------- (Overview)----- */}

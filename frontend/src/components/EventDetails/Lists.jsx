@@ -154,7 +154,7 @@ const Lists = ({ myRequest, eventDetails, handleSendRequest }) => {
       ) : (
         // {/* ---------Send Request ------- */}
         <Box>
-          {myRequest[0]?.status == "Pending" ? (
+          {myRequest[0]?.status === "Pending" ? (
             <Button
               onClick={() => deleteRequests(myRequest[0]?._id)}
               ml="4"
@@ -178,9 +178,9 @@ const Lists = ({ myRequest, eventDetails, handleSendRequest }) => {
               )
             }
             colorScheme={
-              myRequest[0]?.status == "Pending"
+              myRequest[0]?.status === "Pending"
                 ? "green"
-                : myRequest[0]?.status == "Reject"
+                : myRequest[0]?.status === "Reject"
                 ? "red"
                 : "linkedin"
             }
