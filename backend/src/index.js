@@ -4,6 +4,7 @@ const dbConnect = require("./config/db");
 const UserRouter = require("./Routes/user.routes");
 const eventRouter = require("./Routes/events.routes");
 const requestRouter = require("./Routes/requests.routes");
+require("dotenv").config();
 
 const app = express();
 app.use(express.json());
@@ -16,7 +17,7 @@ app.use("/", (req, res) => {
   res.send("Hii, this is the SportEvents backend");
 });
 
-app.listen(8080, async () => {
+app.listen(process.env.PORT || 8080, async () => {
   await dbConnect();
   console.log("Stared at http://localhost:8080");
 });
