@@ -3,9 +3,9 @@
 ### Links:
 1. Frontend Netlify Deploy Link: https://dainty-halva-f5a9de.netlify.app/
 2. Backend Cyclick Deploy Link: https://magnificent-pink-horse.cyclic.app
-3. Full Stack GiHub Link: https://github.com/Abhishek07788/SportEvents
-5. Frontend GiHub Link: https://github.com/Abhishek07788/SportEvents/tree/main/frontend
-6. Backend GiHub Link: https://github.com/Abhishek07788/SportEvents/tree/main/backend
+3. Full Stack GitHub Link: https://github.com/Abhishek07788/SportEvents
+5. Frontend GitHub Link: https://github.com/Abhishek07788/SportEvents/tree/main/frontend
+6. Backend GitHub Link: https://github.com/Abhishek07788/SportEvents/tree/main/backend
 
 #### Description:
 Sport Events App:
