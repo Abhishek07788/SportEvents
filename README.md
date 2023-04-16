@@ -38,14 +38,17 @@ In this app, users can browse a list of available events, view details about eac
 
 
 ### Register Login:
-![image](https://user-images.githubusercontent.com/104199818/232302597-b565ea46-379e-407a-9583-d70df5365d1f.png)
+![image](https://user-images.githubusercontent.com/104199818/232305084-abfd9cc4-6716-4e74-b50c-6650b9aefa74.png)
 
-### Home Page:
-![image](https://user-images.githubusercontent.com/104199818/232303563-55b92780-fbe1-4c45-8fe2-64c828f4695d.png)
+
+### Home Page
+![image](https://user-images.githubusercontent.com/104199818/232302597-b565ea46-379e-407a-9583-d70df5365d1f.png)
 ![image](https://user-images.githubusercontent.com/104199818/232304391-097acd87-fb4e-45e2-99de-736f25ad7248.png)
 
 
 ### Event Details Page:
+![image](https://user-images.githubusercontent.com/104199818/232303563-55b92780-fbe1-4c45-8fe2-64c828f4695d.png)
 ![image](https://user-images.githubusercontent.com/104199818/232303953-2d32dfe4-d372-4f24-b49a-1e113ba36d81.png)
 ![image](https://user-images.githubusercontent.com/104199818/232304140-96843123-de0f-496b-b9a8-ab2c2cc14ef0.png)
-![Uploading image.png…]()
+![image](https://user-images.githubusercontent.com/104199818/232305491-9f29795b-f0fa-45cb-8cb3-fda956e637a0.png)
+
